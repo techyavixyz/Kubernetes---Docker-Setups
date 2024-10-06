@@ -1,0 +1,2 @@
+#!/bin/sh
+git push origin main  # Replace 'main' with your branch name if different
