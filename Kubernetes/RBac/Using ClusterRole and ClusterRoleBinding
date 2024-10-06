@@ -1,0 +1,15 @@
+In the previous section, you created a role binding for a principal and a pod role in the default namespace. You can use the same command and syntax for a cluster role as well. You can replace --role with --clusterrole, but otherwise the command stays the same. It also applies to groups and service accounts.
+
+Earlier, you gave the get, list, and watch permissions on pods to test-user. However, this was only done in the default namespace, as you can verify:
+
+kubectl create ns ns2
+kubectl apply -f ~/deployment.yaml --namespace=ns2
+kubectl --context=test-user-context get pods --namespace=ns2 # Error: forbidden
+
+
+
+You can now create a ClusterRole and ClusterRoleBinding to give test-user the same permissions across the whole cluster:
+
+   kubectl create clusterrole example-cluster-role --verb=get,list,watch --resource=pods
+   
+   kubectl create clusterrolebinding example-cluster-binding --clusterrole=example-cluster-role --user=test-user
