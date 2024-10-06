@@ -1,0 +1,82 @@
+Stop Kubelet
+____________________________________________________
+
+sudo systemctl stop kubelet
+
+Disable Kubelet
+
+sudo systemctl disable kubelet
+
+
+
+2. **Disable Kubelet**:
+
+   sudo systemctl disable kubelet
+
+
+### Step 2: Remove Kubernetes Packages
+
+1. **Remove `kubeadm`, `kubelet`, and `kubectl`**:
+
+
+
+2. **Remove any leftover dependencies**:
+
+   sudo apt-get autoremove
+
+
+### Step 3: Remove Kubernetes Configuration Files
+
+1. **Remove kubelet configuration files**:
+
+   sudo rm -rf /etc/kubernetes
+
+
+2. **Remove any CNI (Container Network Interface) configuration files**:
+
+   sudo rm -rf /etc/cni/net.d
+
+
+3. **Remove the CNI binaries**:
+
+   sudo rm -rf /opt/cni/bin
+
+
+### Step 4: Clean Up Networking and Firewall Rules
+
+1. **Flush iptables rules (if necessary)**:
+
+   sudo iptables -F
+
+
+2. **Remove any kube-related network interfaces** (if applicable):
+
+   sudo ip link delete cni0
+   sudo ip link delete flannel.1
+
+
+### Step 5: Remove Kubeadm Directory (if exists)
+
+1. **Remove the kubeadm directory**:
+
+   sudo rm -rf ~/.kube
+
+
+### Step 6: Update Package Index
+
+Finally, update your package index:
+
+sudo apt-get update
+
+
+### Verification
+
+To ensure everything has been removed, you can check if `kubeadm`, `kubectl`, and `kubelet` are still available:
+
+kubectl version
+kubeadm version
+kubelet --version
+
+If they are not found, the uninstallation was successful.
+
+### Note

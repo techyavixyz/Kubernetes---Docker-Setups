@@ -1,0 +1,129 @@
+Step 1:  Generate a Private Key
+Run the following command to generate a new RSA private key:
+
+openssl genrsa -out abhinash.key 2048
+
+// Outcome: This creates a file named abhinash.key containing a 2048-bit RSA private key.
+***************************************************************************************************
+
+
+Step 2: Generate a Certificate Signing Request (CSR)
+Next, generate a CSR using the private key:
+
+openssl req -new -key abhinash.key -out abhinash.csr -subj "/CN=abhinash"
+
+
+// Outcome: This command creates a file named abhinash.csr, which includes information about the identity of the requester.
+************************************************************************************************************************************************
+
+Step 3: Encode the CSR in Base64
+Prepare the CSR for submission to Kubernetes:
+
+
+cat abhinash.csr | base64 | tr -d '\n'
+
+Outcome: This command outputs a Base64-encoded version of the CSR, which is required for Kubernetes.
+
+for abhinash.csr
+
+LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0KTUlJQ1dEQ0NBVUFDQVFBd0V6RVJNQThHQTFVRUF3d0lZV0pvYVc1aGMyZ3dnZ0VpTUEwR0NTcUdTSWIzRFFFQgpBUVVBQTRJQkR3QXdnZ0VLQW9JQkFRQ3FVNStaTFhqU3I4VEVXOElJZUNHUzAvV3Y4OUE4VVl4Zk1iem5lT290Cm42cktHWTQ0RGZBTllBUTRuT1VremtCYXVnTk1IY3RsNnB4UVZoUFdReFJMSTdnNnBaVmhKMzZPcmRtMVR2N24KbzQ1ZEhpd3J2cU4wdmhaYktnSDZzN1YyUXpacUYwL2RRVGx5VEQ1TnRPK3pqY3JURHd1QTVmVDV3ZExaSkZYNgo0c0lEWmd1RmV2Zk5VUjhFaEhNVlJHYzZYa2RRdXZiTmlBc2VFbTVTeGZXV1pKb29MVDlZQy9EbFlZRk90Qzk2ClRpOGNEbUhBWkNFTWhNeXROT2d3OUp3elI1c056YXdZU3hkWEgzTTNkblB0M0dvWUZPRFA0dElKR3p0Yy9Pd2wKSHRHR1F5VXp6MW4xNWo1M1FKNWg2Nk1PQU45SkErYmtjZUZpNGpaeS85aXZBZ01CQUFHZ0FEQU5CZ2txaGtpRwo5dzBCQVFzRkFBT0NBUUVBQVVkSnk4R0NvQXBsWktYTFhVYXFUYTNoQXYvTHc0MlpTTFNBTUdHV09EVXVtdHlNCmVmZEdrOU4yVCttR2tOUHdtd0MwdU9qM2cwdUVMMG1ja0lFQkpMRDFFL09nZ0c4c1RiVzZleW9QaGZKZi9yS0UKdFBxOVpYNGRYaklrcExkcWcyc1JvQ3ZrN3JxWlc4cVhIL2lIWEtqKytWaVdGaGNYVlNnd0JKUlpNUHhBQXRwego3VEdLVThZNW9WcGo0Vkg0djZ5SlJNOUNxYytIVzY3OHVSMU10UTU5bjRqWDY0Y3A5VlVGZFJ3dUFsTFdCbm1zCjJUY0ozcS8ySGZwNFdWUjVQVEY5cGljL3hzQzlSNXVLU2NvQW1SaTZjZVhERnVlVlYvYmxGMm45cUxBemdoTWcKSlFKT3dxWFFHZElHOWx6SFFsT0tqalFqTnlRQTh4a21rTzdnWFE9PQotLS0tLUVORCBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0K
+
+for test.csr
+
+LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0KTUlJQ1ZEQ0NBVHdDQVFBd0R6RU5NQXNHQTFVRUF3d0VkR1Z6ZERDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRApnZ0VQQURDQ0FRb0NnZ0VCQU9Ma2pzNU91bVA4OVdJR1FPYU9ETkthZ1BqVWlQVng4aVRGcEord1lub1UvR0tICmh0UnVCT3BPbzhrV3JENHFKUHk0UkNJZjFoM2RuZ2ZrOHZ3eVMzZlhsc1FmbnMrRFhGK09OQjFiUk50WThQYnMKRnFLc3dOOGlNQU5YNHpUZlpsMVFhaTVHamJYbzZRNjMwMlRFUm03V0VFTFhTdXlUZUQ4SzRzTGk2Qm5RbFY1QQpBbmhuVW41QXFWdEpHTzJjN3FQb0pmVlEvQzNRVXZ0cGlwMlFxSnJCdUk0U1BsQmlnNE9SVHFQTXNnN21sN2xSCkV2M3JnelpZeGJ3bXpiaUk4ZEVRaE9TKzNIaDRVUlZGOEJ0QjZJcEg0OGt1U2pTTjdVYk9PaDNITURYNFBxZXkKcFlrYUpNdldJVEJUbnQzRVNXSFRCMUc4KzVMQmFyNGZ0Z0gxMFhNQ0F3RUFBYUFBTUEwR0NTcUdTSWIzRFFFQgpDd1VBQTRJQkFRQXQ1RXVqcWRuMSt5UER6UHV1ODE3eURhWjcyTFFFNVNaZkRjUkV0ZGtuZ1lPVVBtMmZEYVQxCkJNcldOZWlhSXRFeU51R2ZwbW40eHpaOXlPbVBiemN6S290TUhoYUpHVXJNV1VQa1djV0pRTGMzbXNBYnk5VWYKcVpUTWlONFhGSEJKZ0lnQVFIdHA2TG80ZnpDMWRIUDVMaVZCdTlKM01tL1A2aGdsUHZCYk1NbkV3eStCTFBNUgpTOXBtUGM1Yzl1cVRXYzE1b2FXc0dTdWFacW9uV05iTStkZmw3NCsyOWR1ejF3bmJWUndkZjBHUXJ0Ykh0VXVMCmFuV25ac1lvK0thNWIvYzBWc0Z0QzEyVnBnR1FiYkozM0ZXWUE1Ym0vczZLdkM2TGdReU5UU0ROZVdiQitOUm0KY1AzZGQ4VjhmMjExS2lLVzI2NSs5SE9wRVdRK2FuTnQKLS0tLS1FTkQgQ0VSVElGSUNBVEUgUkVRVUVTVC0tLS0tCg==
+
+**************************************************************************************************************************************************
+
+The use case for a CertificateSigningRequest (CSR) in Kubernetes typically revolves around authentication and securing communication between clients (users or services) and the Kubernetes API server. Here are some common scenarios:
+
+csr.yml 
+
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: test
+spec:
+  request: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0KTUlJQ1ZEQ0NBVHdDQVFBd0R6RU5NQXNHQTFVRUF3d0VkR1Z6ZERDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRApnZ0VQQURDQ0FRb0NnZ0VCQU9Ma2pzNU91bVA4OVdJR1FPYU9ETkthZ1BqVWlQVng4aVRGcEord1lub1UvR0tICmh0UnVCT3BPbzhrV3JENHFKUHk0UkNJZjFoM2RuZ2ZrOHZ3eVMzZlhsc1FmbnMrRFhGK09OQjFiUk50WThQYnMKRnFLc3dOOGlNQU5YNHpUZlpsMVFhaTVHamJYbzZRNjMwMlRFUm03V0VFTFhTdXlUZUQ4SzRzTGk2Qm5RbFY1QQpBbmhuVW41QXFWdEpHTzJjN3FQb0pmVlEvQzNRVXZ0cGlwMlFxSnJCdUk0U1BsQmlnNE9SVHFQTXNnN21sN2xSCkV2M3JnelpZeGJ3bXpiaUk4ZEVRaE9TKzNIaDRVUlZGOEJ0QjZJcEg0OGt1U2pTTjdVYk9PaDNITURYNFBxZXkKcFlrYUpNdldJVEJUbnQzRVNXSFRCMUc4KzVMQmFyNGZ0Z0gxMFhNQ0F3RUFBYUFBTUEwR0NTcUdTSWIzRFFFQgpDd1VBQTRJQkFRQXQ1RXVqcWRuMSt5UER6UHV1ODE3eURhWjcyTFFFNVNaZkRjUkV0ZGtuZ1lPVVBtMmZEYVQxCkJNcldOZWlhSXRFeU51R2ZwbW40eHpaOXlPbVBiemN6S290TUhoYUpHVXJNV1VQa1djV0pRTGMzbXNBYnk5VWYKcVpUTWlONFhGSEJKZ0lnQVFIdHA2TG80ZnpDMWRIUDVMaVZCdTlKM01tL1A2aGdsUHZCYk1NbkV3eStCTFBNUgpTOXBtUGM1Yzl1cVRXYzE1b2FXc0dTdWFacW9uV05iTStkZmw3NCsyOWR1ejF3bmJWUndkZjBHUXJ0Ykh0VXVMCmFuV25ac1lvK0thNWIvYzBWc0Z0QzEyVnBnR1FiYkozM0ZXWUE1Ym0vczZLdkM2TGdReU5UU0ROZVdiQitOUm0KY1AzZGQ4VjhmMjExS2lLVzI2NSs5SE9wRVdRK2FuTnQKLS0tLS1FTkQgQ0VSVElGSUNBVEUgUkVRVUVTVC0tLS0tCg==
+  signerName: kubernetes.io/kube-apiserver-client
+  usages:
+  - client auth
+
+
+
+****************************************************************************************************************************************************
+
+Step 4: Submit the CSR to Kubernetes
+To approve the CSR, use:
+
+kubectl certificate approve abhinash
+
+// Outcome: Kubernetes processes the CSR, and it will be signed if everything is set up correctly.
+
+*****************************************************************************************************************************************************
+
+Step 5: Retrieve the Signed Certificate
+Fetch the signed certificate from Kubernetes:
+
+kubectl get csr abhinash -o jsonpath='{.status.certificate}' | base64 --decode > abhinash.crt
+
+// Outcome: This command creates a file named abhinash.crt, which contains the signed certificate.
+
+********************************************************************************************************************************************************
+
+Step 6: Configure kubectl Credentials
+Set up kubectl to use the new credentials:
+
+  kubectl config set-credentials abhinash --client-certificate=abhinash.crt --client-key=abhinash.key
+
+// Outcome: This command adds a new user entry for abhinash in the kubeconfig file.
+
+***********************************************************************************************************************************************************
+
+Step 7: View Current Contexts
+List the existing contexts in your kubectl configuration:
+
+
+  kubectl config get-contexts
+
+// Outcome: This will display all available contexts, helping you identify where to configure the new context.
+
+*************************************************************************************************************************************************************
+
+Step 8: Set Up a New Context
+Create a new context using the credentials you just added:
+
+
+  kubectl config set-context abhinash-context --cluster=kubernetes --namespace=default --user=abhinash
+
+// Outcome: This sets a new context named abhinash-context, associating it with the Kubernetes cluster and the abhinash user.
+
+***************************************************************************************************************************************************************
+Step 9: Use the New Context
+Switch to the new context:
+
+
+
+  kubectl config use-context abhinash-context
+
+// Outcome: kubectl will now use the specified context for all subsequent commands.
+
+*********************************************************************************************************************************************************************************
+Step 10: Check Permissions
+Finally, verify what operations you can perform with the new user:
+
+
+
+kubectl auth can-i get pods --as=abhinash --namespace=default
+kubectl auth can-i watch pods --as=abhinash --namespace=default
+kubectl auth can-i list pods --as=abhinash --namespace=default
+
+// Outcome: These commands check if the user abhinash can perform specific actions (get, watch, list) on pods in the default namespace.
+
+**********************************************************************************************************************************************************************
+
+if every thing completed here then create a rolebinding.yml and apply it
+
+
+kubectl apply -f rolebinding.yml
+
+

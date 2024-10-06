@@ -1,0 +1,25 @@
+# Role to allow specific actions on pods in the 'qa' namespace
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: qa-pod-access
+  namespace: qa
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list", "create", "delete"]
+---
+# RoleBinding to bind the 'qa-pod-access' role to user 'test' in 'qa' namespace
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: test-user-qa-access
+  namespace: qa
+subjects:
+- kind: User
+  name: test
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: qa-pod-access
+  apiGroup: rbac.authorization.k8s.io

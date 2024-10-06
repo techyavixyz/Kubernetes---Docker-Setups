@@ -1,0 +1,10 @@
+kubeadm join 172.31.86.155:6443 --token lmfqlr.l2sdxpr2ns6oeuq9 \
+	--discovery-token-ca-cert-hash sha256:8ba11a6f3ca79a1ae1bbd721bd9548f3a7867718d7a7424bcc6847493f5f6e46
+
+
+
+    **to make node as workernode**
+
+    // run the below command on master node 
+
+# kubectl label  node ip-172-31-82-66 node-role.kubernetes.io/worker=true
