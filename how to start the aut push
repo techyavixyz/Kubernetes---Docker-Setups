@@ -8,3 +8,51 @@ Run the Auto-Commit Script: Now that you're in the correct directory, run your a
 bash
 Copy code
 node .git/hooks/auto-commit.js
+
+
+
+Step-by-Step Setup
+Initialize Git Repository: If you haven't already, open your project folder in VS Code and initialize a Git repository:
+
+bash
+Copy code
+git init
+Create a Git Hook: Git hooks are scripts that run automatically at certain points in the Git workflow. You can create a post-commit hook to automatically push changes after a commit.
+
+Navigate to your .git/hooks directory:
+
+bash
+Copy code
+cd .git/hooks
+Create a new file named post-commit:
+
+bash
+Copy code
+touch post-commit
+Open post-commit in VS Code and add the following script:
+
+bash
+Copy code
+#!/bin/sh
+git push origin main  # Change 'main' to your default branch if different
+Make the script executable:
+
+bash
+Copy code
+chmod +x post-commit
+Set Up Auto-Commit: You can use a file watcher to automatically commit changes. One popular tool for this is nodemon, but there are many other options available.
+
+Install nodemon globally if you don't have it:
+
+bash
+Copy code
+npm install -g nodemon
+
+
+
+make sure the package should be installed 
+
+npm and nodejs
+
+
+then install npm install chokidar
