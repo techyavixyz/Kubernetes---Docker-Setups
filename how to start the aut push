@@ -1,0 +1,10 @@
+It should output something like:
+
+arduino
+Copy code
+/home/avidubey/Kubernetes + Docker Setups
+Run the Auto-Commit Script: Now that you're in the correct directory, run your auto-commit.js script:
+
+bash
+Copy code
+node .git/hooks/auto-commit.js
