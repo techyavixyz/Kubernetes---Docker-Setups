@@ -11,5 +11,18 @@ kubectl --context=test-user-context get pods --namespace=ns2 # Error: forbidden
 You can now create a ClusterRole and ClusterRoleBinding to give test-user the same permissions across the whole cluster:
 
    kubectl create clusterrole example-cluster-role --verb=get,list,watch --resource=pods
-   
+
    kubectl create clusterrolebinding example-cluster-binding --clusterrole=example-cluster-role --user=test-user
+
+Verify that test-user can now list pods in the ns2 namespace as well:
+
+  kubectl --context=test-user-context get pods --namespace=ns2
+
+the output will be like
+
+   NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-85996f8dbd-bncvd   1/1     Running   0          3m21s
+nginx-deployment-85996f8dbd-nr8k4   1/1     Running   0          3m21s
+nginx-deployment-85996f8dbd-rs2qt   1/1     Running   0          3m21s
+
+
