@@ -1,3 +1,5 @@
+---
+
 Step 1:  Generate a Private Key
 Run the following command to generate a new RSA private key:
 
@@ -11,7 +13,6 @@ Step 2: Generate a Certificate Signing Request (CSR)
 Next, generate a CSR using the private key:
 
 openssl req -new -key abhinash.key -out abhinash.csr -subj "/CN=abhinash"
-
 
 // Outcome: This command creates a file named abhinash.csr, which includes information about the identity of the requester.
 ************************************************************************************************************************************************

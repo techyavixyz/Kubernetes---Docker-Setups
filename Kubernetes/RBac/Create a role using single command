@@ -1,3 +1,23 @@
-//Use the kubectl create role command to create a role:
+
+Creating roles allows you to assign permissions to a role rather than an individual principal. 
+It's important to remember that the role is not the user, group, or service account (principal). 
+Rather, the role is a name for a collection of activities.
 
 
+# //Use the kubectl create role command to create a role:
+
+
+kubectl create role <role-name> --verb=<verb> --resource=<resource> [--resource-name=<resource-name>] [--namespace=<namespace>]
+
+# Run the following command to create a role named example-role with read-only access to pods:
+
+kubectl create role example-role --verb=get,list,watch --resource=pods
+
+
+Here's the breakdown of this command:
+
+<role-name>: You should replace this with a meaningful name that reflects the purpose or scope of the role.
+--verb=<verb>: This specifies the desired verbs, or actions, that the role allows. For example, you can use --verb=create,get,list,delete or specify a single action like --verb=get.
+--resource=<resource>: This specifies the resource type for which the role will be applicable. For example, you can use --resource=pods, --resource=services, or --resource=deployments. You can also use wildcards like --resource=pods,* to include all resources in a group.
+--resource-name=<resource-name> (optional): If you want to limit the role to a specific resource or set of resources, you can specify the name or pattern using this option. For example, you can use --resource-name=my-pod or --resource-name=my-deployment-*.
+--namespace=<namespace> (optional): If you want the role to be restricted to a specific namespace, you can specify the namespace using this option. If not provided, the role will be created in the default namespace.

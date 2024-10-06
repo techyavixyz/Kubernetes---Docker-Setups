@@ -1,0 +1,24 @@
+You can now use the kubectl create rolebinding command to create a role binding. The syntax for this command is as follows: 
+ 
+    kubectl create rolebinding <binding-name> --role=<role> --user=<user> --group=<group> --serviceaccount=<service-account> [--namespace=<namespace>]
+
+
+*******************Create a role binding that connects example-role to test-user with the following command: ********************
+
+    kubectl create rolebinding example-binding --role=example-role --user=test-user
+
+
+Verify that test-user can now list pods:
+
+    kubectl --context=test-user-context get pods
+
+ 
+Output will be looks like
+
+   NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-85996f8dbd-fxx68   1/1     Running   0          19m
+nginx-deployment-85996f8dbd-w9xbt   1/1     Running   0          19m
+nginx-deployment-85996f8dbd-xbxq9   1/1     Running   0          19m
+
+
+
